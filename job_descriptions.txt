@@ -1,0 +1,12 @@
+# JD 1: Data Analyst (Ahmedabad)
+Data Analyst: Looking for a Data Analyst with 2+ years of experience. 
+Required skills: SQL, Excel, Power BI. Good to have: Python, Tableau. 
+Location: Ahmedabad (remote hybrid).
+---
+# JD 2: Backend Developer (Remote)
+Backend Developer: Require 3+ years experience building scalable APIs with Node.js or Python. 
+Required skills: REST APIs, PostgreSQL, Docker. Good to have: AWS, Redis.
+---
+# JD 3: Digital Marketing Executive
+Digital Marketing Executive: Looking for 1-3 years experience in digital marketing, SEO, content creation, and social media ads. 
+Required skills: Google Analytics, Facebook Ads, SEO basics. Good to have: basic design skills.

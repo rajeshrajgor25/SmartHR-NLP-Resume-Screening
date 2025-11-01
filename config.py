@@ -1,0 +1,13 @@
+IMAP_HOST = 'imap.gmail.com'
+IMAP_USER = 'rajeshrajgor00@gmail.com'
+IMAP_PASSWORD = 'vlovmeispegqqznj'   
+MAIL_FOLDER = 'INBOX'
+SEARCH_CRITERIA = 'ALL'
+RESUMES_DIR = 'resumes'
+OUTPUT_EXCEL = 'shortlisted_candidates.xlsx'
+SIMILARITY_THRESHOLD = 0.70
+SMTP_HOST = 'smtp.gmail.com'
+SMTP_PORT = 587
+SMTP_USER = IMAP_USER
+SMTP_PASSWORD = IMAP_PASSWORD
+SENDER_REJECTION = IMAP_USER

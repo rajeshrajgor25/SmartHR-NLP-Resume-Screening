@@ -1,0 +1,10 @@
+pandas
+openpyxl
+nltk
+spacy
+sentence-transformers
+pdfplumber
+docx2txt
+imapclient
+pyzmail36
+python-magic
