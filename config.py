@@ -1,6 +1,6 @@
 IMAP_HOST = 'imap.gmail.com'
-IMAP_USER = 'rajeshrajgor00@gmail.com'
-IMAP_PASSWORD = 'vlovmeispegqqznj'   
+IMAP_USER = 'yourmail@gmail.com'
+IMAP_PASSWORD = 'yourapppassword'   
 MAIL_FOLDER = 'INBOX'
 SEARCH_CRITERIA = 'ALL'
 RESUMES_DIR = 'resumes'
