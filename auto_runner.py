@@ -1,14 +1,22 @@
 import schedule
 import time
 import subprocess
+import datetime
 
 def run_job():
-    print("🔍 Checking for new HR mails...")
-    subprocess.run(["python", "main.py"])
+    print(f"\n🕒 {datetime.datetime.now().strftime('%H:%M:%S')} - 🔍 Checking for new HR mails...")
+    try:
+        subprocess.run(["python", "main.py"], check=True)
+        print("✅ Resume scan completed.\n")
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Error running main.py: {e}\n")
 
-schedule.every(10).minutes.do(run_job)
+schedule.every(15).seconds.do(run_job)
 
-print("🚀 Auto Resume Scanner started...")
+print("🚀 Auto Resume Scanner started (Testing Mode - every 15 sec)...")
+
+run_job()
+
 while True:
     schedule.run_pending()
-    time.sleep(60)
+    time.sleep(5)

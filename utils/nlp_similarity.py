@@ -6,7 +6,7 @@ model = SentenceTransformer(MODEL_NAME)
 
 COMMON_SKILLS = [
     'python','sql','excel','power bi','tableau','machine learning','r','java','c++',
-    'nlp','aws','azure','react','node','postgres','docker','redis','seo','google analytics'
+    'nlp','aws','azure','react','node','postgres','docker','redis','seo','google analytics','UI/UX'
 ]
 
 def clean_text(text):
