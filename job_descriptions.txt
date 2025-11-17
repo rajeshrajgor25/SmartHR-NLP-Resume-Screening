@@ -10,3 +10,13 @@ Required skills: REST APIs, PostgreSQL, Docker. Good to have: AWS, Redis.
 # JD 3: Digital Marketing Executive
 Digital Marketing Executive: Looking for 0-3 years experience in digital marketing, SEO, content creation, and social media ads. 
 Required skills: Google Analytics, Facebook Ads, SEO basics. Good to have: basic design skills.
+
+# JD 4: Social Media Manager
+Social Media Manager: Looking for 0–2 years of experience in managing brand presence across Instagram, Facebook, LinkedIn, and YouTube.
+Required skills: Social media strategy, content planning, Canva, basic video editing, analytics understanding.
+Good to have: Paid ads knowledge, copywriting, influencer collaboration experience.
+---
+# JD 5: UI/UX Designer
+UI/UX Designer: Require 0–3 years of experience in user research, wireframing, and UI design.
+Required skills: Figma, Wireframing, Prototyping, User flow creation.
+Good to have: Usability testing, basic frontend understanding (HTML/CSS), design systems.

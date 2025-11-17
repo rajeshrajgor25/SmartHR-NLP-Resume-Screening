@@ -9,7 +9,7 @@ os.makedirs(RESUMES_DIR, exist_ok=True)
 
 
 def save_attachment(payload_bytes, filename):
-    """Save the attachment to the resumes directory."""
+    """Save resume attachment into directory."""
     filename = filename.replace(' ', '_')
     path = os.path.join(RESUMES_DIR, filename)
     with open(path, 'wb') as f:
@@ -18,40 +18,52 @@ def save_attachment(payload_bytes, filename):
 
 
 def parse_email_address(from_header):
-    """Extract clean email address from From header."""
+    """Extract clean email from header."""
     m = re.search(r'([\w\.-]+@[\w\.-]+)', from_header)
     return m.group(1) if m else from_header
 
 
 def is_valid_resume_file(filename):
-    """Allow only PDF or DOCX files (resume attachments)."""
+    """Only accept PDF or DOCX resumes."""
     if not filename:
         return False
     return filename.lower().endswith(('.pdf', '.docx'))
 
 
 def is_spam_sender(sender):
-    """Filter out common spam or marketing senders."""
+    """Skip spam and newsletter mails."""
     spam_keywords = ["no-reply", "newsletter", "marketing", "promo", "update", "notification"]
     return any(k in sender.lower() for k in spam_keywords)
 
 
-def fetch_emails():
-    """Fetch only unread candidate-related emails with resume attachments."""
+def fetch_emails(only_unread=True):
+    """
+    Fetch unread or all candidate emails.
+    only_unread=True → fetch only new mails
+    only_unread=False → fetch all mails
+    """
     results = []
-    print("📨 Connecting to IMAP (fetching unread mails)...")
+    print(" Connecting to IMAP...")
 
     with IMAPClient(IMAP_HOST) as client:
         client.login(IMAP_USER, IMAP_PASSWORD)
         client.select_folder(MAIL_FOLDER)
 
-        messages = client.search(['UNSEEN'])
-        print(f"Found {len(messages)} unread messages")
+        if only_unread:
+            print(" Fetching unread candidate emails...")
+            search_filter = ['UNSEEN']
+        else:
+            print(" Fetching ALL candidate emails...")
+            search_filter = ['ALL']
+
+        messages = client.search(search_filter)
+        print(f"Found {len(messages)} messages")
 
         if not messages:
             return results
 
         fetch_data = client.fetch(messages, ['RFC822'])
+
         for uid, md in fetch_data.items():
             raw = md[b'RFC822']
             msg = BytesParser(policy=policy.default).parsebytes(raw)
@@ -62,7 +74,7 @@ def fetch_emails():
             sender_email = parse_email_address(str(from_hdr))
 
             if is_spam_sender(sender_email):
-                print(f"⚠️ Skipping spam or newsletter email from: {sender_email}")
+                print(f" Skipping spam email from: {sender_email}")
                 continue
 
             body = ''
@@ -71,20 +83,20 @@ def fetch_emails():
                     if part.get_content_type() == 'text/plain' and part.get_content_disposition() is None:
                         try:
                             body += part.get_content()
-                        except Exception:
+                        except:
                             pass
             else:
                 if msg.get_content_type() == 'text/plain':
                     try:
                         body = msg.get_content()
-                    except Exception:
-                        body = ''
+                    except:
+                        pass
 
             attachments = []
             for part in msg.iter_attachments():
                 filename = part.get_filename()
                 if not filename or not is_valid_resume_file(filename):
-                    continue  
+                    continue
 
                 payload = part.get_payload(decode=True)
                 path = save_attachment(payload, filename)
@@ -92,7 +104,7 @@ def fetch_emails():
                 print(f"📎 Saved resume: {filename} from {sender_email}")
 
             if not attachments:
-                print(f"⚠️ Skipping email (no valid resume): {sender_email}")
+                print(f" Skipping email (no valid resume attached): {sender_email}")
                 continue
 
             results.append({
@@ -105,6 +117,7 @@ def fetch_emails():
                 'attachments': attachments
             })
 
-            client.add_flags(uid, [b'\\Seen'])
+            if only_unread:
+                client.add_flags(uid, [b'\\Seen'])
 
     return results
